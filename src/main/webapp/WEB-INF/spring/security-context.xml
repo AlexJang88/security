@@ -4,13 +4,23 @@
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
+	<bean id="customLoginSuccess" class="test.spring.security.security.CustomLoginHandler" />
 	<security:http>
-		<security:form-login/>
+		<security:intercept-url pattern="/sample/all" access="permitAll" />
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
+		<security:form-login login-page="/sample/customLogin" authentication-success-handler-ref="customLoginSuccess" />
+		<!-- 접근 구너한 없는 URI 접근시 에러페이지 설정 -->
+		<security:access-denied-handler error-page="/sample/accessError" />
 	</security:http>
 	
 	<security:authentication-manager>
-	
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="member" password="{noop}1234" authorities="ROLE_MEMBER"/>
+				<security:user name="admin" password="{noop}1234" authorities="ROLE_ADMIN,ROLE_MEMBER"/>
+			</security:user-service>
+		</security:authentication-provider>
 	</security:authentication-manager>
 		
 </beans>
