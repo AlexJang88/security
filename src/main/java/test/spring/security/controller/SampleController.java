@@ -29,8 +29,8 @@ public class SampleController {
 	public String login() {
 		return "sample/login";
 	}
-//	@RequestMapping("/loginPro")
-//	public String loginPro() {
-//		return "";
-//	}
+	@RequestMapping("/customLogout")
+	public String customLogout() {
+		return "sample/logout";
+	}
 }
