@@ -14,8 +14,8 @@
 		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
 		<!-- 필수항목 -->
 		<security:form-login login-page="/sample/customLogin" authentication-success-handler-ref="customLoginSuccess" />
-		<security:logout invalidate-session="true" logout-url="/sample/customLogout"  />
-		
+		<security:logout invalidate-session="true" logout-url="/sample/customLogout" delete-cookies="remember-me" />
+		<security:remember-me data-source-ref="dataSource" token-validity-seconds="172800"/>
 		
 		<!-- 접근 구너한 없는 URI 접근시 에러페이지 설정 -->
 		<security:access-denied-handler error-page="/sample/accessError" />
